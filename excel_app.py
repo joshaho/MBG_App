@@ -444,7 +444,7 @@ def main():
         with zipfile.ZipFile('reports/student_reports.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
             zipdir('reports/', zipf)
 
-    if os.path.exists('reports/student_reports.zip') and not reports_ready:
+    if os.path.exists('reports/student_reports.zip') and reports_ready:
         with open('reports/student_reports.zip', 'rb') as f:
             download_button = st.download_button('Download Zip', f, file_name='student_reports.zip')  # Defaults to 'application/octet-stream'
         if download_button:
