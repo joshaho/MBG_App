@@ -56,7 +56,7 @@ def aggregate_sheets(sheets_of_interest, convince_me_name, excel_tracker):
     cm_sheet = pd.read_excel(excel_tracker, sheet_name = convince_me_name).dropna(subset=['Student Name'])
     cm_sheet.columns = ['Date', 'Student Name', 'Student ID', 'variable', 'value']
     cm_sheet = cm_sheet[['Student Name', 'Student ID', 'variable', 'value']]
-    cm_sheet['source'] = 'Convince Me'
+    cm_sheet['source'] = convince_me_name
 
     long_sheet = pd.concat([long_sheet, cm_sheet], ignore_index=True)
 
@@ -81,9 +81,9 @@ def aggregate_sheets(sheets_of_interest, convince_me_name, excel_tracker):
 
 # In[24]:
 
-def student_emails(excel_tracker, sheet_name='Attendance'):
-    attendance_sheet = pd.read_excel(excel_tracker, sheet_name = sheet_name).dropna(subset=['Student Name'])
-    return attendance_sheet
+def student_emails(excel_tracker, sheet_name='Reference'):
+    reference_sheet = pd.read_excel(excel_tracker, sheet_name = sheet_name).dropna(subset=['Student Name'])
+    return reference_sheet
 
 
 # In[7]:
@@ -91,12 +91,18 @@ def student_emails(excel_tracker, sheet_name='Attendance'):
 def bad_edfinity_emails(edf, email_list):
     non_marian_emails = edf[~edf['Email/Username'].isin(email_list)]['Email/Username'].dropna()
     for email in non_marian_emails:
+        replace_email=None
         temp_dict = {'nolanmac@outlook.com': 'nmacdonald727@marian.edu',
                      'hjminnis03@gmail.com': 'hminnis028@marian.edu',
                      'mnedohon369@marian.edu': np.nan,
                      'mjschelonka@gmail.com': 'mschelonka674@marian.edu'}
-        edf['Email/Username'] = edf['Email/Username'].replace(email, temp_dict[email])
-    #    old_val = st.selectbox("",old_values,key=f"MyKey{email}")
+        replace_email = st.selectbox("Replace Non-Matching Email '"+email+"' with:",np.append(email_list, "Drop Student"),key=f"MyKey{email}")
+        if replace_email is not None:
+            if replace_email=='Drop Student':
+                edf['Email/Username'] = edf['Email/Username'].replace(email, np.nan)
+            else:
+                edf['Email/Username'] = edf['Email/Username'].replace(email, replace_email)
+    #
     return edf
 
 
@@ -403,7 +409,26 @@ def zipdir(path, ziph):
 # In[35]:
 
 
+def midterm_targets_gen(tracker, sheet_name, midterm_date):
+    learning_targets_timeline = pd.read_excel(tracker, sheet_name = sheet_name)
+    filtered_targets = learning_targets_timeline[pd.to_datetime(learning_targets_timeline['Date'])<=pd.to_datetime(midterm_date)]
+    agg_targets = pd.DataFrame(filtered_targets.T.drop(['Date', 'Assessment']).dropna(how='all', axis=0).sum(axis=1))
+    agg_targets['Category'] = np.where(agg_targets.reset_index()['index'].str.contains('*', regex=False), 'Supplementary', 'Core')
+    agg_targets['Category'].loc['PWA']='PWA'
+    return agg_targets
 
+
+def midterm_summary(source_df, midtern_targets):
+    filtered_ls = source_df[~source_df['variable'].isin(['Date', 'Grade', 'Total', 'PWA Total'])] #originally long_sheet
+    objective_summary = filtered_ls.groupby(['Student ID', 'Category', 'variable']).sum('mastery_points')[['mastery_points']]
+    print(objective_summary.to_csv('obj.csv'))
+    objective_summary = objective_summary.loc[(objective_summary!=0).all(axis=1)]
+    objective_summary = (objective_summary.reset_index()
+        .pivot(index=['Category','variable'], columns='source', values='mastery_points')
+        .fillna(0)
+        )
+    st.dataframe(objective_summary)
+    return
 
 def main():
     st.title("Marian MBG Report Generation")
@@ -416,9 +441,19 @@ def main():
     uploaded_file = st.file_uploader("Upload Grade Template", type = ['xlsx'])
     if uploaded_file is not None:
         excel_tracker = pd.ExcelFile(uploaded_file)
-        sheets_of_interest = st.multiselect("Select the grade sheets to be used (excluding Convince Me meetings)", excel_tracker.sheet_names)
+        sheet_select = excel_tracker.sheet_names
+        if 'Cover' in sheet_select:
+            sheet_select.remove('Cover')
+            sheet_select.remove('Reference')
+            sheet_select.remove('Learning Target Mapping')
+        convince_me_name = st.selectbox("Select the sheet where Convince Me meetings are tracked", sheet_select)
+        sheets_of_interest = st.multiselect("Select the grade sheets to be used (excluding Convince Me meetings)", sheet_select)
+        generate_summary_flag = st.checkbox('Generate Class Summary')
+        #midterm_flag = st.checkbox('Calculate Midterm Grades')
+        #if midterm_flag:
+    #        learning_targets_name = st.selectbox("Select the Learning Target Mapping sheet:", excel_tracker.sheet_names)
+#            midterm_date = st.date_input("Select Midterm Cut-off")
 
-        convince_me_name = st.selectbox("Select the sheet where Convince Me meetings are tracked", excel_tracker.sheet_names)
 
 
     edfinity_file = st.file_uploader("Upload Edfinity Extract", type = ['csv'])
@@ -426,18 +461,37 @@ def main():
         edf = edfinity_clean(edfinity_file)
 
     if ((edfinity_file is not None) and (uploaded_file is not None)):
-        attendance_sheet = student_emails(excel_tracker)
-        email_list = attendance_sheet['Preferred Email'].dropna().unique()
+        reference_sheet = student_emails(excel_tracker)
+        email_list = reference_sheet['Preferred Email'].dropna().unique()
         edf = bad_edfinity_emails(edf, email_list)
 
         if st.button('Generate Reports'):
 
             st.write('Generating Reports...')
             long_sheet, pwa_sheet, cm_sheet = aggregate_sheets(sheets_of_interest, convince_me_name ,excel_tracker)
-            mapped_edf = edfinity_mapping(edf, attendance_sheet)
+            mapped_edf = edfinity_mapping(edf, reference_sheet)
 
             mastery_table = set_mastery()
-            for id in pd.to_numeric(attendance_sheet['Student ID'].dropna().unique(), downcast = 'integer'):
+#            if midterm_flag:
+#                midterm_targets = midterm_targets_gen(excel_tracker, learning_targets_name, midterm_date)
+#                midterm_summary(long_sheet, midterm_targets)
+            if generate_summary_flag:
+                objective_summary = long_sheet.groupby(['Student ID','Category', 'variable']).sum('mastery_points')[['mastery_points']]
+                objective_summary = objective_summary.loc[(objective_summary!=0).all(axis=1)]
+                mastery_summary = objective_summary[objective_summary['mastery_points']>=2].groupby(['Student ID', 'Category'])['mastery_points'].nunique().reset_index()
+                continuing_summary = objective_summary[objective_summary['mastery_points']>=3].groupby(['Student ID', 'Category'])['mastery_points'].nunique().reset_index()
+                mastery_summary['Lvl'] = 'Mastery'
+                continuing_summary['Lvl'] = 'Continuing Mastery'
+                midframe = mastery_summary.append(continuing_summary)
+                midframe['columns'] = midframe['Category'] + ' ' + midframe['Lvl']
+                #st.dataframe(data=mastery_summary)
+                results_summary = (midframe.reset_index()
+                    .pivot(index=['Student ID'], columns=['columns'], values='mastery_points')
+                #    .fillna(0)
+                    )
+
+                st.download_button('Download Summary', results_summary.to_csv(), file_name='summary.csv')
+            for id in pd.to_numeric(reference_sheet['Student ID'].dropna().unique(), downcast = 'integer'):
                 workbook_writer(id, long_sheet, pwa_sheet, mapped_edf, mastery_table)
                 reports_ready=True
     if reports_ready==True:
