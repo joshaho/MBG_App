@@ -16,7 +16,7 @@ import zipfile
 def edfinity_clean(edfinity_file):
     edf = pd.read_csv(edfinity_file)
     edf=edf[edf.columns.drop(list(edf.filter(regex='(Preview)')))]
-    regularization_list=edf.drop(columns=['Last Name', 'First Name', 'Email/Username', 'ID', 'Course Name', 'Review of Prerequisites for Calculus I']).columns
+    regularization_list=edf.drop(columns=['Last Name', 'First Name', 'Email/Username', 'ID', 'Course Name', 'Review of Prerequisites for Calculus I', 'Edfinity Demo'], errors='ignore').columns
     edf=edf.drop(columns='Review of Prerequisites for Calculus I')
     edf=edf.drop(columns='Edfinity Demo', errors = 'ignore')
     for column in regularization_list:
