@@ -478,20 +478,19 @@ def main():
             if generate_summary_flag:
                 objective_summary = long_sheet.groupby(['Student ID','Category', 'variable']).sum('mastery_points')[['mastery_points']]
                 objective_summary = objective_summary.loc[(objective_summary!=0).all(axis=1)]
-                mastery_summary = objective_summary[objective_summary['mastery_points']>=2].groupby(['Student ID', 'Category'])['mastery_points'].nunique().reset_index()
-                continuing_summary = objective_summary[objective_summary['mastery_points']>=3].groupby(['Student ID', 'Category'])['mastery_points'].nunique().reset_index()
+                mastery_summary = objective_summary[objective_summary['mastery_points']>=2].reset_index().groupby(['Student ID', 'Category'])['variable'].nunique().reset_index()
+                continuing_summary = objective_summary[objective_summary['mastery_points']>=3].reset_index().groupby(['Student ID', 'Category'])['variable'].nunique().reset_index()
                 mastery_summary['Lvl'] = 'Mastery'
                 continuing_summary['Lvl'] = 'Continuing Mastery'
                 midframe = mastery_summary.append(continuing_summary)
                 midframe['columns'] = midframe['Category'] + ' ' + midframe['Lvl']
                 results_summary = (midframe.reset_index()
-                    .pivot(index=['Student ID'], columns=['columns'], values='mastery_points')
-                #    .fillna(0)
+                    .pivot(index=['Student ID'], columns=['columns'], values='variable')
+                    .fillna(0)
                     )
                 frame_w_edf = mapped_edf.join(results_summary, on='Student ID')
                 frame_w_edf.rename(columns  = {0:'Edfinity'}, inplace=True)
                 frame_w_edf = frame_w_edf[['Student ID', 'Core Mastery', 'Core Continuing Mastery', 'Supplementary Mastery', 'Supplementary Continuing Mastery', 'Edfinity']]
-                st.dataframe(data=frame_w_edf)
                 st.download_button('Download Summary', frame_w_edf.to_csv(), file_name='summary.csv')
             for id in pd.to_numeric(reference_sheet['Student ID'].dropna().unique(), downcast = 'integer'):
                 workbook_writer(id, long_sheet, pwa_sheet, mapped_edf, mastery_table)
