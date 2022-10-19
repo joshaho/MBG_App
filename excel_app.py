@@ -484,13 +484,15 @@ def main():
                 continuing_summary['Lvl'] = 'Continuing Mastery'
                 midframe = mastery_summary.append(continuing_summary)
                 midframe['columns'] = midframe['Category'] + ' ' + midframe['Lvl']
-                #st.dataframe(data=mastery_summary)
                 results_summary = (midframe.reset_index()
                     .pivot(index=['Student ID'], columns=['columns'], values='mastery_points')
                 #    .fillna(0)
                     )
-
-                st.download_button('Download Summary', results_summary.to_csv(), file_name='summary.csv')
+                frame_w_edf = mapped_edf.join(results_summary, on='Student ID')
+                frame_w_edf.rename(columns  = {0:'Edfinity'}, inplace=True)
+                frame_w_edf = frame_w_edf[['Student ID', 'Core Mastery', 'Core Continuing Mastery', 'Supplementary Mastery', 'Supplementary Continuing Mastery', 'Edfinity']]
+                st.dataframe(data=frame_w_edf)
+                st.download_button('Download Summary', frame_w_edf.to_csv(), file_name='summary.csv')
             for id in pd.to_numeric(reference_sheet['Student ID'].dropna().unique(), downcast = 'integer'):
                 workbook_writer(id, long_sheet, pwa_sheet, mapped_edf, mastery_table)
                 reports_ready=True
