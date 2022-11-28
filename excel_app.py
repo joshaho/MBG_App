@@ -471,7 +471,7 @@ def main():
             st.write('Generating Reports...')
             long_sheet, pwa_sheet, cm_sheet = aggregate_sheets(sheets_of_interest, convince_me_name ,excel_tracker)
             mapped_edf = edfinity_mapping(edf, reference_sheet)
-
+            st.download_button('[DEBUG] Download Raw Data', long_sheet.to_csv(), file_name='raw_grades.csv')
             mastery_table = set_mastery()
 #            if midterm_flag:
 #                midterm_targets = midterm_targets_gen(excel_tracker, learning_targets_name, midterm_date)
