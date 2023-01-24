@@ -105,8 +105,40 @@ def sidebar():
         )
     return choose
 
+# In[6] Login Function:
+
+import streamlit as st
+
+def check_password():
+    """Returns `True` if the user had the correct password."""
+
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if st.session_state["password"] == st.secrets["password"]:
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # don't store password
+        else:
+            st.session_state["password_correct"] = False
+
+    if "password_correct" not in st.session_state:
+        # First run, show input for password.
+        st.text_input(
+            "Password", type="password", on_change=password_entered, key="password"
+        )
+        return False
+    elif not st.session_state["password_correct"]:
+        # Password not correct, show input + error.
+        st.text_input(
+            "Password", type="password", on_change=password_entered, key="password"
+        )
+        st.error("😕 Password incorrect")
+        return False
+    else:
+        # Password correct.
+        return True
 
 
+# In[5] Main Execution:
 def main():
     menu_select = sidebar()
     if menu_select == "Home":
@@ -120,4 +152,5 @@ def main():
 
 # In[3] Main Statement:
 if __name__ == "__main__":
-    main()
+    if check_password():
+        main()
