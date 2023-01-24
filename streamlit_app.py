@@ -6,7 +6,7 @@
 
 import grading_algorithms
 import streamlit as st
-from streamlit-option-menu import option_menu
+from streamlit_option_menu import option_menu
 
 # In[2] Excel App: 
 def excel_app():
