@@ -159,7 +159,7 @@ class data():
             task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(row_index+1)}  
             row_index=row_index+1  
             for ele in row:  
-                task["Row"+str(row.row_index(ele))]=ele  
+                task["Row"+str(row.index(ele))]=ele  
         table_service.insert_entity(tablename, task)  
         return True 
 
