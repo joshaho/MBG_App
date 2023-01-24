@@ -92,8 +92,6 @@ def excel_app():
 
 # In[4] Define Sidebar:
 def sidebar():
-    st.sidebar.markdown("## Controls")
-    st.sidebar.markdown("You can **change** the values to change the *chart*.")
     with st.sidebar:
         choose = option_menu("Applications", ["Home", "Meeting Logger", "Assignment Input"],
                             icons=['house', 'kanban', 'book'],
@@ -106,8 +104,17 @@ def sidebar():
         }
         )
 
+
+
 def main():
     sidebar()
+    if choose == "Home":
+        #placeholder
+        st.header("Home")
+    elif choose == "Meeting Logger":
+        st.header("Meeting Logger")
+    elif choose == "Assignment Input":
+        st.header("Assignment Input")
 
 
 # In[3] Main Statement:
