@@ -195,10 +195,10 @@ def meeting_logger():
     learning_target = st.selectbox("Learning Target", data.targets)
     notes = st.text_input("Meeting Notes")
     meeting_write_table = pd.DataFrame(
-                        {"date": date,
-                        "student_id": data.student_ids[0],
-                        "learning_target": learning_target,
-                        "notes": notes
+                        {"date": [date],
+                        "student_id": [data.student_ids[0]],
+                        "learning_target": [learning_target],
+                        "notes": [notes]
                     })
     if st.button("Submit"):
         data.setTable(table_name, meeting_write_table, course_offering, timestamp)
