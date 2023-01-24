@@ -149,9 +149,11 @@ def check_password():
 
 # In[7] Data Fetch (Placeholder):
 class data():
-
     # Create the Azure Table Storage client
     table_service = TableService(account_name=st.secrets["azure_account_name"], account_key=st.secrets["azure_account_key"])  
+
+    #def __init__(self):
+
 
     #Command to insert new data into existin table on Azure Table Storage
     def setTable(tablename,table, partition, row_index=0):  
@@ -160,12 +162,12 @@ class data():
             row_index=row_index+1  
             for ele in row:  
                 task["Row"+str(row.index(ele))]=ele  
-        table_service.insert_entity(tablename, task)  
+        data.table_service.insert_entity(tablename, task)  
         return True 
 
     #Retrieve existing table from Azure Table Storage client
     def getTab(tableName):  
-        tasks = table_service.query_entities(tableName)  
+        tasks = data.table_service.query_entities(tableName)  
         tab=[]  
         newrow=[]  
         for row in tasks:  
