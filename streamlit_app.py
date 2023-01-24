@@ -103,17 +103,18 @@ def sidebar():
             "nav-link-selected": {"background-color": "backgroundColor"},
         }
         )
+    return choose
 
 
 
 def main():
-    sidebar()
-    if choose == "Home":
+    menu_select = sidebar()
+    if menu_select == "Home":
         #placeholder
         st.header("Home")
-    elif choose == "Meeting Logger":
+    elif menu_select == "Meeting Logger":
         st.header("Meeting Logger")
-    elif choose == "Assignment Input":
+    elif menu_select == "Assignment Input":
         st.header("Assignment Input")
 
 
