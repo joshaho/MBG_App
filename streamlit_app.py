@@ -187,7 +187,7 @@ class data():
 def meeting_logger():
     table_name = "meetings"
     timestamp = datetime.datetime.now()
-    timestamp_int = int(timestamp.strftime('%Y%m%d'))
+    timestamp_int = int(timestamp.strftime('%Y%m%d%H%M%S'))
 
 
 
