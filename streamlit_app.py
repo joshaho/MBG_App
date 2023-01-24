@@ -2,11 +2,22 @@
 # coding: utf-8
 
 # In[1]:
-
+#Base Python
+import json
+import datetime
 
 import grading_algorithms
+
+#Streamlit
 import streamlit as st
 from streamlit_option_menu import option_menu
+
+#Azure Cosmos
+import azure.cosmos.errors as errors
+import azure.cosmos.documents as documents
+import azure.cosmos.http_constants as http_constants
+from azure.cosmosdb.table.tableservice import TableService  
+from azure.cosmosdb.table.models import Entity  
 
 # In[2] Excel App: 
 def excel_app():
@@ -107,8 +118,6 @@ def sidebar():
 
 # In[6] Login Function:
 
-import streamlit as st
-
 def check_password():
     """Returns `True` if the user had the correct password."""
 
@@ -140,21 +149,58 @@ def check_password():
 # In[7] Data Fetch (Placeholder):
 class data():
 
-    ##Database
+    # Create the Azure Table Storage client
+    table_service = TableService(account_name=st.secrets["azure_account_name"], account_key=st.secrets["azure_account_key"])  
 
+    #Command to insert new data into existin table on Azure Table Storage
+    def setTable(tablename,table, partition, row_index=0):  
+        for row in table:  
+            task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(row_index+1)}  
+            row_index=row_index+1  
+            for ele in row:  
+                task["Row"+str(row.row_index(ele))]=ele  
+        table_service.insert_entity(tablename, task)  
+        return True 
+
+    #Retrieve existing table from Azure Table Storage client
+    def getTab(tableName):  
+        tasks = table_service.query_entities(tableName)  
+        tab=[]  
+        newrow=[]  
+        for row in tasks:  
+            for ele in row:  
+                newrow.append(row[ele])  
+            tab.append(newrow)  
+            newrow=[]  
+        return tab   
 
     ###Placeholder######
     students = ["John", "Sally", "Norman"]
+    student_ids =[10000, 10001, 10002]
     targets = ["L.1", "L.2"]
+    course_offering = ["MAT230-F2022-01"]
 
 # In[6] Meeting Logger App:
 def meeting_logger():
+    table_name = "meetings"
+    timestamp = datetime.datetime.now()
+
+
+
     st.header("Meeting Logger")
+    course_offering = st.selectbox("Course Offering", data.course_offering)
     date = st.date_input("Meeting Date")
     student = st.selectbox("Student Name", data.students)
     learning_target = st.selectbox("Learning Target", data.targets)
     notes = st.text_input("Meeting Notes")
+    meeting_write_table = pd.DataFrame(
+                        {"date": date,
+                        "student_id": student_id,
+                        "learning_target": learning_target,
+                        "notes": notes
+                    })
     if st.button("Submit"):
+        data.setTable(table_name, meeting_write_table, course_offering, timestamp)
         st.write("Saved!")
 
 
