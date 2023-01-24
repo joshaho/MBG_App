@@ -196,7 +196,7 @@ def meeting_logger():
     notes = st.text_input("Meeting Notes")
     meeting_write_table = pd.DataFrame(
                         {"date": date,
-                        "student_id": student_id,
+                        "student_id": student_ids[0],
                         "learning_target": learning_target,
                         "notes": notes
                     })
