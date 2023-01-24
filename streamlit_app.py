@@ -93,6 +93,17 @@ def excel_app():
 def sidebar():
     st.sidebar.markdown("## Controls")
     st.sidebar.markdown("You can **change** the values to change the *chart*.")
+    with st.sidebar:
+    choose = option_menu("Applications", ["Home", "Meeting Logger", "Assignment Input"],
+                         icons=['house', 'kanban', 'book'],
+                         menu_icon="app-indicator", default_index=0,
+                         styles={
+        "container": {"padding": "5!important", "background-color": "#fafafa"},
+        "icon": {"color": "orange", "font-size": "25px"}, 
+        "nav-link": {"font-size": "16px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
+        "nav-link-selected": {"background-color": "#02ab21"},
+    }
+    )
 
 def main():
     sidebar()
