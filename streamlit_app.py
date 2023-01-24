@@ -137,15 +137,36 @@ def check_password():
         # Password correct.
         return True
 
+# In[7] Data Fetch (Placeholder):
+class data():
+
+    ##Database
+
+
+    ###Placeholder######
+    students = ["John", "Sally", "Norman"]
+    targets = ["L.1", "L.2"]
+
+# In[6] Meeting Logger App:
+def meeting_logger():
+    st.header("Meeting Logger")
+    date = st.date_input("Meeting Date")
+    student = st.selectbox("Student Name", data.students)
+    learning_target = st.selectbox("Learning Target", data.targets)
+    notes = st.text_input("Meeting Notes")
+    if st.button("Submit"):
+        st.write("Saved!")
+
 
 # In[5] Main Execution:
 def main():
+
     menu_select = sidebar()
     if menu_select == "Home":
         #placeholder
         st.header("Home")
     elif menu_select == "Meeting Logger":
-        st.header("Meeting Logger")
+        meeting_logger()
     elif menu_select == "Assignment Input":
         st.header("Assignment Input")
 
