@@ -99,10 +99,10 @@ def sidebar():
                             icons=['house', 'kanban', 'book'],
                             menu_icon="app-indicator", default_index=0,
                             styles={
-            "container": {"padding": "5!important", "background-color": "#F0F2F6"},
-            "icon": {"color": "orange", "font-size": "25px"}, 
+            "container": {"padding": "5!important", "background-color": "secondaryBackgroundColor"},
+            "icon": {"color": "primaryColor", "font-size": "25px"}, 
             "nav-link": {"font-size": "16px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
-            "nav-link-selected": {"background-color": "#F63366"},
+            "nav-link-selected": {"background-color": "backgroundColor"},
         }
         )
 
