@@ -4,4 +4,4 @@ numpy
 openpyxl
 xlsxwriter
 streamlit-option-menu
-azure-cosmos
+azure-cosmosdb-table
