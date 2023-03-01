@@ -189,7 +189,7 @@ def filters():
     date = st.date_input("Meeting Date")
     student = st.selectbox("Student Name", data.students)
     learning_target = st.selectbox("Learning Target", data.targets)
-    return
+    return course_offering, date, student, learning_target
 
 # In[6] Meeting Logger App:
 def meeting_logger():
@@ -200,7 +200,7 @@ def meeting_logger():
 
 
     st.header("Meeting Logger")
-    filters()
+    course_offering, date, student, learning_target = filters()
     notes = st.text_input("Meeting Notes")
     meeting_write_table = pd.DataFrame(
                         {"date": [date],
