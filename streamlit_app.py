@@ -217,7 +217,8 @@ def meeting_logger():
 class home():
 
 
-    def meeting_summary()
+    def meeting_summary():
+        return
 
     def __init__(self):
         filters()
