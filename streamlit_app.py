@@ -183,6 +183,14 @@ class data():
     targets = ["L.1", "L.2"]
     course_offering = ["MAT230-F2022-01"]
 
+# In[7] Global Filters to Call Back:
+def filters():
+    course_offering = st.selectbox("Course Offering", data.course_offering)
+    date = st.date_input("Meeting Date")
+    student = st.selectbox("Student Name", data.students)
+    learning_target = st.selectbox("Learning Target", data.targets)
+    return
+
 # In[6] Meeting Logger App:
 def meeting_logger():
     table_name = "meetings"
@@ -192,10 +200,7 @@ def meeting_logger():
 
 
     st.header("Meeting Logger")
-    course_offering = st.selectbox("Course Offering", data.course_offering)
-    date = st.date_input("Meeting Date")
-    student = st.selectbox("Student Name", data.students)
-    learning_target = st.selectbox("Learning Target", data.targets)
+    filters()
     notes = st.text_input("Meeting Notes")
     meeting_write_table = pd.DataFrame(
                         {"date": [date],
@@ -208,13 +213,23 @@ def meeting_logger():
         st.write("Saved!")
 
 
+
+class home():
+
+
+    def meeting_summary()
+
+    def __init__(self):
+        filters()
+
+
 # In[5] Main Execution:
 def main():
 
     menu_select = sidebar()
     if menu_select == "Home":
         #placeholder
-        st.header("Home")
+        home()
     elif menu_select == "Meeting Logger":
         meeting_logger()
     elif menu_select == "Assignment Input":
