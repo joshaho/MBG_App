@@ -15,7 +15,7 @@ from streamlit_option_menu import option_menu
 
 #Azure Cosmos
 #import azure.cosmos.errors as errors
-import azure.cosmos.documents as documents
+#import azure.cosmos.documents as documents
 import azure.cosmos.http_constants as http_constants
 from azure.cosmosdb.table.tableservice import TableService  
 from azure.cosmosdb.table.models import Entity  
