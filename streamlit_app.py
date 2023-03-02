@@ -221,10 +221,13 @@ def meeting_logger():
     st.header("Meeting Logger")
     course_offering, date, student, learning_target = filters()
     notes = st.text_input("Meeting Notes")
+    if notes is None:
+        notes=""
     meeting_write_table = pd.DataFrame(
                         {"date": [date],
                         "student_id": [data.student_ids[0]],
                         "learning_target": [learning_target],
+                        "course_offering": [course_offering]
                         "notes": [notes]
                     })
     if st.button("Submit"):
