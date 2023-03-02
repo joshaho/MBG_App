@@ -203,7 +203,7 @@ def filters(inline=True):
         learning_target = st.selectbox("Learning Target", data.targets)
     else:
         course_offering = st.sidebar.selectbox("Course Offering", data.add_all(data.course_offering))
-        #date = st.sidebar.date_input("Meeting Date")
+        date = st.sidebar.date_input("Meeting Date")
         student = st.sidebar.selectbox("Student Name", data.add_all(data.students))
         learning_target = st.sidebar.selectbox("Learning Target", data.add_all(data.targets))
     return course_offering, date, student, learning_target
