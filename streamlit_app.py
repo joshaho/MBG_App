@@ -221,7 +221,7 @@ class home():
         return
 
     def __init__(self):
-        filters()
+        course_offering, date, student, learning_target = filters()
 
 
 # In[5] Main Execution:
