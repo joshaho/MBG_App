@@ -184,7 +184,7 @@ class data():
     course_offering = ["MAT230-F2022-01"]
 
     def add_all(list):
-        list.append('(All)')
+        ['(All)'].append(list)
         return list
 
     def check_all(option, option_list):
