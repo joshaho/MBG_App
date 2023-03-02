@@ -184,11 +184,17 @@ class data():
     course_offering = ["MAT230-F2022-01"]
 
 # In[7] Global Filters to Call Back:
-def filters():
-    course_offering = st.selectbox("Course Offering", data.course_offering)
-    date = st.date_input("Meeting Date")
-    student = st.selectbox("Student Name", data.students)
-    learning_target = st.selectbox("Learning Target", data.targets)
+def filters(inline=True):
+    if position==True:
+        course_offering = st.selectbox("Course Offering", data.course_offering)
+        date = st.date_input("Meeting Date")
+        student = st.selectbox("Student Name", data.students)
+        learning_target = st.selectbox("Learning Target", data.targets)
+    else:
+        course_offering = st.sidebar.selectbox("Course Offering", data.course_offering)
+        date = st.sidebar.date_input("Meeting Date")
+        student = st.sidebar.selectbox("Student Name", data.students)
+        learning_target = st.sidebar.selectbox("Learning Target", data.targets)
     return course_offering, date, student, learning_target
 
 # In[6] Meeting Logger App:
@@ -221,7 +227,7 @@ class home():
         return
 
     def __init__(self):
-        course_offering, date, student, learning_target = filters()
+        course_offering, date, student, learning_target = filters(False)
 
 
 # In[5] Main Execution:
