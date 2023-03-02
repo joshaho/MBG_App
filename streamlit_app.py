@@ -183,6 +183,17 @@ class data():
     targets = ["L.1", "L.2"]
     course_offering = ["MAT230-F2022-01"]
 
+    def add_all(list):
+        list.append('(All)')
+        return list
+
+    def check_all(option, option_list):
+        if option=='(All)':
+            return option_list
+        else:
+            return option
+
+
 # In[7] Global Filters to Call Back:
 def filters(inline=True):
     if inline==True:
@@ -191,10 +202,10 @@ def filters(inline=True):
         student = st.selectbox("Student Name", data.students)
         learning_target = st.selectbox("Learning Target", data.targets)
     else:
-        course_offering = st.sidebar.selectbox("Course Offering", data.course_offering)
-        date = st.sidebar.date_input("Meeting Date")
-        student = st.sidebar.selectbox("Student Name", data.students)
-        learning_target = st.sidebar.selectbox("Learning Target", data.targets)
+        course_offering = st.sidebar.selectbox("Course Offering", data.add_all(data.course_offering))
+        #date = st.sidebar.date_input("Meeting Date")
+        student = st.sidebar.selectbox("Student Name", data.add_all(data.students))
+        learning_target = st.sidebar.selectbox("Learning Target", data.add_all(data.targets))
     return course_offering, date, student, learning_target
 
 # In[6] Meeting Logger App:
@@ -228,6 +239,10 @@ class home():
 
     def __init__(self):
         course_offering, date, student, learning_target = filters(False)
+        course_offering = data.check_all(course_offering, data.course_offering)
+        student = data.check_all(student, data.students)
+        learning_target = data.check_all(learning_target, data.targets)
+
 
 
 # In[5] Main Execution:
