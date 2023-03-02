@@ -185,7 +185,7 @@ class data():
 
 # In[7] Global Filters to Call Back:
 def filters(inline=True):
-    if position==True:
+    if inline==True:
         course_offering = st.selectbox("Course Offering", data.course_offering)
         date = st.date_input("Meeting Date")
         student = st.selectbox("Student Name", data.students)
