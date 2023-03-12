@@ -264,7 +264,7 @@ class home():
             'Student ID',
             'Learning Target',
             'Course Offering',
-            'Result'
+            'Result',
             'Notes',
             'RefHash'
         ]
