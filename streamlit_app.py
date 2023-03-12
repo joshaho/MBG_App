@@ -155,8 +155,9 @@ class data():
     #def __init__(self):
 
 
-    #Command to insert new data into existin table on Azure Table Storage
+    #Command to insert new data into existing table on Azure Table Storage
     def setTable(tablename,table, partition, row_index=0):  
+        print(table)
         for row in table:  
             task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(row_index+1)}  
             row_index=row_index+1  
@@ -197,7 +198,7 @@ class data():
 
 
 # In[7] Global Filters to Call Back:
-def filters(inline=True):
+def meeting_filters(inline=True):
     if inline==True:
         course_offering = st.selectbox("Course Offering", data.course_offering)
         date = st.date_input("Meeting Date")
@@ -219,7 +220,7 @@ def meeting_logger():
 
 
     st.header("Meeting Logger")
-    course_offering, date, student, learning_target = filters()
+    course_offering, date, student, learning_target = meeting_filters()
     notes = st.text_input("Meeting Notes")
     if notes is None:
         notes=""
@@ -244,7 +245,7 @@ class home():
         return
 
     def __init__(self):
-        course_offering, date, student, learning_target = filters(False)
+        course_offering, date, student, learning_target = meeting_filters(False)
         course_offering = data.check_all(course_offering, data.course_offering)
         student = data.check_all(student, data.students)
         learning_target = data.check_all(learning_target, data.targets)
