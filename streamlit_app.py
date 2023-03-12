@@ -278,6 +278,8 @@ class home():
         course_offering = data.check_all(course_offering, data.course_offering)
         student = data.check_all(student, data.students)
         learning_target = data.check_all(learning_target, data.targets)
+
+        st.header('Meetings')
         home.meeting_summary('meetings')
 
 
