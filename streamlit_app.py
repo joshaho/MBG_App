@@ -255,7 +255,7 @@ class home():
     def meeting_summary(meeting_table):
         stream = pd.DataFrame(data.getTab('meetings'))
         stream.columns = {
-            'IDX'
+            'IDX',
             'PartitionKey',
             'RowKey',
             'Timestamp',
