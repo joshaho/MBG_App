@@ -253,7 +253,7 @@ class home():
 
 
     def meeting_summary(meeting_table):
-        stream = data.getTab('meetings')
+        stream = pd.DataFrame(data.getTab('meetings'))
         stream.columns = {
             'PartitionKey',
             'RowKey',
