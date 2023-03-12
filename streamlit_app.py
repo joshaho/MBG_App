@@ -264,11 +264,13 @@ class home():
             'Student ID',
             'Learning Target',
             'Course Offering',
+            'Result'
             'Notes',
             'RefHash'
         ]
-        student_fields = ['Date', 'Learning Target']
-        st.dataframe(stream)
+        #student_fields = ['Date', 'Learning Target', 'Result'] #for future auth portal
+        instructor_fields = ['Course Offering', 'Date', 'Learning Target', 'Result', 'Notes']
+        st.dataframe(stream[instructor_fields])
         return
 
     def __init__(self):
