@@ -147,6 +147,13 @@ def check_password():
         # Password correct.
         return True
 
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError ("Type %s not serializable" % type(obj))
+
 # In[7] Data Fetch (Placeholder):
 class data():
     # Create the Azure Table Storage client
@@ -160,11 +167,8 @@ class data():
         for row_number in range(len(table)):  
             task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(row_number+1)}  
             for column in table.columns:
-                task[column] = table.iloc[[row_number]][column].values[0]
-            st.text(task)
-            serialized_task = json.dumps(task, indent=4, sort_keys=True, default=str)
-            st.text(serialized_task)
-        data.table_service.insert_entity(tablename, serialized_task)  
+                task[column] = json_serial(table.iloc[[row_number]][column].values[0])
+        data.table_service.insert_entity(tablename, task)  
         return True 
 
     #Retrieve existing table from Azure Table Storage client
