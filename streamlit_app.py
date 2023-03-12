@@ -6,6 +6,7 @@
 import json
 import datetime
 import pandas as pd
+import numpy as np
 
 import grading_algorithms
 
@@ -152,6 +153,8 @@ def json_serial(obj):
 
     if isinstance(obj, (datetime.datetime, datetime.date)):
         return obj.isoformat()
+    if isinstance(obj, np.int64):
+        return int(obj)
     raise TypeError ("Type %s not serializable" % type(obj))
 
 # In[7] Data Fetch (Placeholder):
