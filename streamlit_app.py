@@ -241,7 +241,7 @@ def meeting_logger():
                         "student_id": [data.student_ids[0]],
                         "learning_target": [learning_target],
                         "course_offering": [course_offering],
-                        "result": [result]
+                        "result": [result],
                         "notes": [notes]
                     })
     if st.button("Submit"):
