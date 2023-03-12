@@ -232,6 +232,7 @@ def meeting_logger():
 
     st.header("Meeting Logger")
     course_offering, date, student, learning_target = meeting_filters()
+    result = st.selectbox("Student Name", ["Y", "Y*", "A", "R", "N"])
     notes = st.text_input("Meeting Notes")
     if notes is None:
         notes=""
@@ -240,6 +241,7 @@ def meeting_logger():
                         "student_id": [data.student_ids[0]],
                         "learning_target": [learning_target],
                         "course_offering": [course_offering],
+                        "result": [result]
                         "notes": [notes]
                     })
     if st.button("Submit"):
@@ -265,6 +267,7 @@ class home():
             'Notes',
             'RefHash'
         ]
+        student_fields = ['Date', 'Learning Target']
         st.dataframe(stream)
         return
 
