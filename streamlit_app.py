@@ -156,7 +156,7 @@ def json_serial(obj):
     if isinstance(obj, np.int64):
         return int(obj)
     if isinstance(obj, str):
-        return int(obj)
+        return obj
     raise TypeError ("Type %s not serializable" % type(obj))
 
 # In[7] Data Fetch (Placeholder):
