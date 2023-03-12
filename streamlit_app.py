@@ -162,7 +162,8 @@ class data():
             for column in table.columns:
                 task[column] = table.iloc[[row_number]][column].values[0]
             st.text(task)
-        data.table_service.insert_entity(tablename, task)  
+            serialized_task = json.dumps(task, indent=4, sort_keys=True, default=str)
+        data.table_service.insert_entity(tablename, serialized_task)  
         return True 
 
     #Retrieve existing table from Azure Table Storage client
