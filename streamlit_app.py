@@ -161,8 +161,7 @@ class data():
             task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(row_number+1)}  
             for column in table.columns:
                 task[column] = table.iloc[[row_number]][column]
-            for ele in row:  
-                task["Row"+str(row.index(ele))]=ele  
+            st.text(task)
         data.table_service.insert_entity(tablename, task)  
         return True 
 
