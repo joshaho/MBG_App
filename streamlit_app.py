@@ -233,9 +233,7 @@ def meeting_logger():
                     })
     if st.button("Submit"):
         st.dataframe(meeting_write_table)
-        for row in meeting_write_table:
-            st.text(row)
-        #data.setTable(table_name, meeting_write_table, course_offering, timestamp_int)
+        data.setTable(table_name, meeting_write_table, course_offering, timestamp_int)
         st.write("Saved!")
 
 
