@@ -157,11 +157,10 @@ class data():
 
     #Command to insert new data into existing table on Azure Table Storage
     def setTable(tablename,table, partition, row_index=0):  
-        for row in table:  
-            task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(row_index+1)}  
+        for row_number in range(len(table)):  
+            task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(row_number+1)}  
             for column in table.columns:
-                task[column] = table.iloc[[row]][column]
-            row_index=row_index+1  
+                task[column] = table.iloc[[row_number]][column]
             for ele in row:  
                 task["Row"+str(row.index(ele))]=ele  
         data.table_service.insert_entity(tablename, task)  
