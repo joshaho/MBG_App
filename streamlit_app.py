@@ -106,8 +106,8 @@ def excel_app():
 # In[4] Define Sidebar:
 def sidebar():
     with st.sidebar:
-        choose = option_menu("Applications", ["Home", "Meeting Logger", "Assignment Input"],
-                            icons=['house', 'kanban', 'book'],
+        choose = option_menu("Applications", ["Home", "Meeting Logger", "Assignment Input", "Setup"],
+                            icons=['house', 'kanban', 'book', 'gear'],
                             menu_icon="app-indicator", default_index=0,
                             styles={
             "container": {"padding": "5!important", "background-color": "secondaryBackgroundColor"},
@@ -295,6 +295,8 @@ def main():
         meeting_logger()
     elif menu_select == "Assignment Input":
         st.header("Assignment Input")
+    elif menu_select == "Setup":
+        st.header("Setup")
 
 
 # In[3] Main Statement:
