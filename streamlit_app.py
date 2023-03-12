@@ -232,7 +232,7 @@ def meeting_logger():
 
     st.header("Meeting Logger")
     course_offering, date, student, learning_target = meeting_filters()
-    result = st.selectbox("Student Name", ["Y", "Y*", "A", "R", "N"])
+    result = st.selectbox("Result", ["Y", "Y*", "A", "R", "N"])
     notes = st.text_input("Meeting Notes")
     if notes is None:
         notes=""
