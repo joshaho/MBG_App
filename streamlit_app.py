@@ -253,7 +253,18 @@ class home():
 
 
     def meeting_summary(meeting_table):
-        st.dataframe(meeting_table)
+        stream = data.getTab('meetings')
+        stream.columns = {
+            'PartitionKey',
+            'RowKey',
+            'Timestamp',
+            'Date',
+            'Student ID',
+            'Learning Target',
+            'Course Offering',
+            'Notes'
+        }
+        st.dataframe(stream)
         return
 
     def __init__(self):
@@ -261,7 +272,7 @@ class home():
         course_offering = data.check_all(course_offering, data.course_offering)
         student = data.check_all(student, data.students)
         learning_target = data.check_all(learning_target, data.targets)
-        home.meeting_summary(data.getTab('meetings'))
+        home.meeting_summary('meetings')
 
 
 
