@@ -233,6 +233,7 @@ def meeting_logger():
                         "notes": [notes]
                     })
     if st.button("Submit"):
+        print(meeting_write_table)
         data.setTable(table_name, meeting_write_table, course_offering, timestamp_int)
         st.write("Saved!")
 
