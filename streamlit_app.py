@@ -282,6 +282,13 @@ class home():
         st.header('Meetings')
         home.meeting_summary('meetings')
 
+class setup():
+    
+    def student_import():
+        st.subheader("Set Student List")
+        course_id = st.text_input("Course Offering")
+        ##Add file upload for canvas information
+
 
 
 # In[5] Main Execution:
