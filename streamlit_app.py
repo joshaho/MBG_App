@@ -304,6 +304,7 @@ def main():
         st.header("Assignment Input")
     elif menu_select == "Setup":
         st.header("Setup")
+        setup.student_import()
 
 
 # In[3] Main Statement:
