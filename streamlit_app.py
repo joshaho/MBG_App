@@ -310,7 +310,7 @@ class setup():
                     })
             student_table = pd.DataFrame(
                 {"student_id": [canvas_data['Student ID'].values],
-                "name": [canvas_data['Student name'].values]
+                "name": [canvas_data['Student name'].values],
                 "join year": [year]
                     })
             st.dataframe(canvas_data[['Student ID', 'Student name']])
