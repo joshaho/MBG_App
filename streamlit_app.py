@@ -290,6 +290,7 @@ class setup():
         ##Add file upload for canvas information
         canvas_file = st.file_uploader("Upload Canvas File (.csv):", help="The file section and offering are extracted from the filename, so do not rename the file.")
         if canvas_file is not None:
+            timestamp_int = int(timestamp.strftime('%Y%m%d%H%M%S'))
             course_table = "course"
             course_offering_table = "course_offering"
 
