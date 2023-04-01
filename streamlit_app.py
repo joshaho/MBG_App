@@ -291,7 +291,7 @@ class setup():
         canvas_file = st.file_uploader("Upload Canvas File (.csv):", help="The file section and offering are extracted from the filename, so do not rename the file.")
         if canvas_file is not None:
             canvas_data = pd.read_csv(canvas_file)
-            offering = st.text(re.findall("\b[0-9]{4}[a-zA-Z]{2}", canvas_file.name))
+            offering = st.text(re.findall("[0-9]{4}[a-zA-Z]{2}", canvas_file.name))
             course_section = st.text(re.findall("MAT-\d{3}-MM\d{2}", canvas_file.name))
             
             st.dataframe(canvas_data[['Student ID', 'Student name']])
