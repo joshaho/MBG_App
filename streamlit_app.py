@@ -293,9 +293,8 @@ class setup():
             canvas_data = pd.read_csv(canvas_file)
             offering = st.text(re.findall("-(19|20)\d{2}(SP|FA)-", canvas_file.name))
             course_section = st.text(re.findall("MAT-\d{3}-MM\d{2}", canvas_file.name))
-            st.text(canvas_data.columns)
             
-            st.dataframe(canvas_data[['Student ID', 'Student Name']])
+            st.dataframe(canvas_data[['Student ID', 'Student name']])
 
 
 
