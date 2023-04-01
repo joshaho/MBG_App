@@ -7,6 +7,7 @@ import json
 import datetime
 import pandas as pd
 import numpy as np
+import re
 
 import grading_algorithms
 
@@ -286,8 +287,16 @@ class setup():
     
     def student_import():
         st.subheader("Set Student List")
-        course_id = st.text_input("Course Offering")
         ##Add file upload for canvas information
+        canvas_file = st.file_uploader("Upload Canvas File (.csv):", help="The file section and offering are extracted from the filename, so do not rename the file.")
+        canvas_data = pd.read_csv(canvas_file)
+        offering = st.text(re.findall("\b(19|20)\d{2}\b", canvas_file.name))
+        course_section = st.text(re.findall("MAT-\d{3}-MM\d{2}", canvas_file.name))
+        st.text(canvas_data.columns)
+        
+        st.dataframe(canvas_data[['Student ID', 'Student Name']])
+
+
 
 
 
