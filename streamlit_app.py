@@ -308,13 +308,16 @@ class setup():
                 {"offering_id": [course_section+"-"+offering],
                 "course_id": [course]
                     })
-            contacts_write_table = pd.DataFrame(
-                {"student_id": [course_section+"-"+offering],
-                "course_id": [course]
+            student_table = pd.DataFrame(
+                {"student_id": [canvas_data['Student ID'].values],
+                "name": [canvas_data['Student name'].values]
+                "join year": [year]
                     })
             st.dataframe(canvas_data[['Student ID', 'Student name']])
             if st.button("Submit"):
                 data.setTable(course_table, course_write_table, offering_id, timestamp_int)
+                data.setTable(course_offering_table, course_offering_write_table, offering_id, timestamp_int)
+                data.setTable(student_table, course_offering_write_table, offering_id, timestamp_int)
                 st.write("Saved!")
                 
 
