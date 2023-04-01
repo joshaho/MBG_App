@@ -290,11 +290,31 @@ class setup():
         ##Add file upload for canvas information
         canvas_file = st.file_uploader("Upload Canvas File (.csv):", help="The file section and offering are extracted from the filename, so do not rename the file.")
         if canvas_file is not None:
+            course_table = "course"
+            course_offering_table = "course_offering"
+
             canvas_data = pd.read_csv(canvas_file)
-            offering = st.text(re.findall("20[0-9]{2}[a-zA-Z]{2}", canvas_file.name))
-            course_section = st.text(re.findall("MAT-\d{3}-MM\d{2}", canvas_file.name))
-            
+            offering = re.findall("20[0-9]{2}[a-zA-Z]{2}", canvas_file.name)[0]
+            year = re.findall("20[0-9]{2}", canvas_file.name)[0]
+            course_section = re.findall("MAT-\d{3}-MM\d{2}", canvas_file.name)[0]
+            offering_id = course_section+"-"+offering
+            course = re.findall("MAT-\d{3}", canvas_file.name)[0]
+            course_write_table = pd.DataFrame(
+                {"course_id": [course]
+                    })
+            course_offering_write_table = pd.DataFrame(
+                {"offering_id": [course_section+"-"+offering],
+                "course_id": [course]
+                    })
+            contacts_write_table = pd.DataFrame(
+                {"student_id": [course_section+"-"+offering],
+                "course_id": [course]
+                    })
             st.dataframe(canvas_data[['Student ID', 'Student name']])
+            if st.button("Submit"):
+                data.setTable(course_table, course_write_table, offering_id, timestamp_int)
+                st.write("Saved!")
+                
 
 
 
