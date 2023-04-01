@@ -292,7 +292,8 @@ class setup():
         if canvas_file is not None:
             timestamp_int = int(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
             course_table = "course"
-            course_offering_table = "course_offering"
+            course_offering_table = "courseoffering"
+            student_table = "contacts"
 
             canvas_data = pd.read_csv(canvas_file)
             offering = re.findall("20[0-9]{2}[a-zA-Z]{2}", canvas_file.name)[0]
