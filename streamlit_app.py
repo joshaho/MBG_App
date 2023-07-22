@@ -192,7 +192,7 @@ class data():
         return tab   
 
     ###Placeholder######
-    students = ["John", "Sally", "Norman"]
+    students = pd.DataFrame(data.getTab('contacts'))[4]
     student_ids =[10000, 10001, 10002]
     targets = ["L.1", "L.2"]
     course_offering = ["MAT230-F2022-01"]
@@ -229,8 +229,6 @@ def meeting_logger():
     table_name = "meetings"
     timestamp = datetime.datetime.now()
     timestamp_int = int(timestamp.strftime('%Y%m%d%H%M%S'))
-
-    st.dataframe(data.getTab('contacts'))
 
 
     st.header("Meeting Logger")
