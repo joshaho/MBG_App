@@ -320,7 +320,7 @@ class setup():
                 data.setTable(course_offering_table, course_offering_write_table, offering_id, timestamp_int)
                 st.write('Done Course Offering')
                 for ind, row in student_write_table.iterrows():
-                    st.dataframe(row.to_frame())
+                    st.dataframe(row.to_frame().transpose())
                     data.setTable(student_table, pd.DataFrame(row), offering_id, timestamp_int) #setTable(tablename,table, partition, row_index=0)
                 
                 st.write('Done Student Table')
