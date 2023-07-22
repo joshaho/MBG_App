@@ -230,6 +230,7 @@ def meeting_logger():
     timestamp = datetime.datetime.now()
     timestamp_int = int(timestamp.strftime('%Y%m%d%H%M%S'))
 
+    st.dataframe(data.getTab('contacts'))
 
 
     st.header("Meeting Logger")
@@ -278,7 +279,7 @@ class home():
         try:
             st.dataframe(stream[instructor_fields])
         except KeyError:
-            st.write('waiting for first record')
+            st.write('waiting for first record.')
         return
 
     def __init__(self):
