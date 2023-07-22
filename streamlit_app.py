@@ -181,7 +181,7 @@ class data():
 
     #Retrieve existing table from Azure Table Storage client
     def getTab(tableName):  
-        tasks = table_service.query_entities(tableName)  
+        tasks = data.table_service.query_entities(tableName)  
         tab=[]  
         newrow=[]  
         for row in tasks:  
@@ -190,12 +190,6 @@ class data():
             tab.append(newrow)  
             newrow=[]  
         return tab   
-
-    ###Placeholder######
-    students = pd.DataFrame(getTab('contacts'))[4]
-    student_ids =[10000, 10001, 10002]
-    targets = ["L.1", "L.2"]
-    course_offering = ["MAT230-F2022-01"]
 
     def add_all(list):
         list.append('(All)')
@@ -230,6 +224,11 @@ def meeting_logger():
     timestamp = datetime.datetime.now()
     timestamp_int = int(timestamp.strftime('%Y%m%d%H%M%S'))
 
+    students = pd.DataFrame(data.getTab('contacts'))[4]
+    student_ids =[10000, 10001, 10002]
+    targets = ["L.1", "L.2"]
+    course_offering = ["MAT230-F2022-01"]
+
 
     st.header("Meeting Logger")
     course_offering, date, student, learning_target = meeting_filters()
@@ -239,7 +238,7 @@ def meeting_logger():
         notes=""
     meeting_write_table = pd.DataFrame(
                         {"date": [date],
-                        "student_id": [data.student_ids[0]],
+                        "student_id": [student_ids[0]],
                         "learning_target": [learning_target],
                         "course_offering": [course_offering],
                         "result": [result],
