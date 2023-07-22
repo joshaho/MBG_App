@@ -192,7 +192,7 @@ class data():
         return tab   
 
     ###Placeholder######
-    students = pd.DataFrame(data.getTab('contacts'))[4]
+    students = pd.DataFrame(getTab('contacts'))[4]
     student_ids =[10000, 10001, 10002]
     targets = ["L.1", "L.2"]
     course_offering = ["MAT230-F2022-01"]
