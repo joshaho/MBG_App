@@ -312,7 +312,7 @@ class setup():
             student_write_table = pd.DataFrame(
                 {"student_id": canvas_data['Student ID'].values,
                 "name": canvas_data['Student name'].values
-                    })[0]
+                    })[[0]]
             student_write_table['join year'] = year
             st.dataframe(student_write_table)
             if st.button("Submit"):
