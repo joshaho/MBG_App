@@ -309,7 +309,7 @@ class setup():
                 "course_id": [course]
                     })
             student_write_table = pd.DataFrame(
-                {"student_id": canvas_data['Student ID'].values,
+                {"student_id": str(canvas_data['Student ID'].values),
                 "student_name": canvas_data['Student name'].values
                     })
             student_write_table['join_year'] = year
