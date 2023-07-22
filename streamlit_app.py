@@ -312,7 +312,7 @@ class setup():
             student_write_table = pd.DataFrame(
                 {"student_id": canvas_data['Student ID'].values,
                 "student_name": canvas_data['Student name'].values
-                    }).iloc[0:1]
+                    })
             student_write_table['join_year'] = year
             st.dataframe(student_write_table)
             if st.button("Submit"):
@@ -321,7 +321,6 @@ class setup():
                 data.setTable(course_offering_table, course_offering_write_table, offering_id, timestamp_int)
                 st.write('Done Course Offering')
                 data.setTable(student_table, student_write_table, offering_id, timestamp_int) #setTable(tablename,table, partition, row_index=0)
-
                 st.write('Done Student Table')
                 st.write("Saved!")
                 
