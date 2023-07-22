@@ -316,8 +316,11 @@ class setup():
             st.dataframe(canvas_data[['Student ID', 'Student name']])
             if st.button("Submit"):
                 data.setTable(course_table, course_write_table, offering_id, timestamp_int)
+                st.write('Done Course Table')
                 data.setTable(course_offering_table, course_offering_write_table, offering_id, timestamp_int)
+                st.write('Done Course Offering')
                 data.setTable(student_table, course_offering_write_table, offering_id, timestamp_int)
+                st.write('Done Student Table')
                 st.write("Saved!")
                 
 
