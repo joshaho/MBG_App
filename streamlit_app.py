@@ -175,7 +175,7 @@ class data():
             task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(uid)}  
             for column in table.columns:
                 task[column] = json_serial(table.iloc[[row_number]][column].values[0])
-        data.table_service.insert_entity(tablename, task)  
+            data.table_service.insert_entity(tablename, task)  
         return True 
 
     #Retrieve existing table from Azure Table Storage client
@@ -319,8 +319,7 @@ class setup():
                 st.write('Done Course Table')
                 data.setTable(course_offering_table, course_offering_write_table, offering_id, timestamp_int)
                 st.write('Done Course Offering')
-                for ind, row in student_write_table.iterrows():
-                    data.setTable(student_table, st.dataframe(row.to_frame().transpose()), offering_id, timestamp_int) #setTable(tablename,table, partition, row_index=0)
+                data.setTable(student_table, student_write_table, offering_id, timestamp_int) #setTable(tablename,table, partition, row_index=0)
                 
                 st.write('Done Student Table')
                 st.write("Saved!")
