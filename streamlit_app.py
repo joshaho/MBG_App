@@ -314,7 +314,7 @@ class setup():
                 "name": canvas_data['Student name'].values
                     })
             student_write_table['join year'] = year
-            st.dataframe(student_write_table.iloc[0])
+            st.dataframe(student_write_table.iloc[0:1])
             if st.button("Submit"):
                 data.setTable(course_table, course_write_table, offering_id, timestamp_int)
                 st.write('Done Course Table')
