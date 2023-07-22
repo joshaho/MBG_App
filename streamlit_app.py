@@ -221,10 +221,10 @@ def meeting_filters(inline=True):
         student = st.selectbox("Student Name", cache['students'])
         learning_target = st.selectbox("Learning Target", cache['targets'])
     else:
-        course_offering = st.sidebar.selectbox("Course Offering", data.add_all(cache['course_offering'].values))
+        course_offering = st.sidebar.selectbox("Course Offering", data.add_all(cache['course_offering']))
         date = st.sidebar.date_input("Meeting Date")
         student = st.sidebar.selectbox("Student Name", data.add_all(cache['students'].values))
-        learning_target = st.sidebar.selectbox("Learning Target", data.add_all(cache['targets'].values))
+        learning_target = st.sidebar.selectbox("Learning Target", data.add_all(cache['targets']))
     return course_offering, date, student, learning_target
 
 # In[6] Meeting Logger App:
