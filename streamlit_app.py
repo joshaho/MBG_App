@@ -203,17 +203,19 @@ class data():
         else:
             return option
 
-# In[7] Global Filters to Call Back:
-def meeting_filters(inline=True):
-
+def call_cache():
     cache = {
     'students' : pd.DataFrame(data.getTab('contacts'))[4],
     'student_ids' : [10000, 10001, 10002],
     'targets' : ["L.1", "L.2"],
     'course_offering' : ["MAT230-F2022-01"]
     }
+    return cache
 
-    
+# In[7] Global Filters to Call Back:
+def meeting_filters(inline=True):
+
+    cache = call_cache()
 
     if inline==True:
         course_offering = st.selectbox("Course Offering", cache['course_offering'])
@@ -289,10 +291,13 @@ class home():
         return
 
     def __init__(self):
+        
+        cache = call_cache()
+
         course_offering, date, student, learning_target = meeting_filters(False)
-        course_offering = data.check_all(course_offering, data.course_offering)
-        student = data.check_all(student, data.students)
-        learning_target = data.check_all(learning_target, data.targets)
+        course_offering = data.check_all(course_offering, cache.course_offering)
+        student = data.check_all(student, cache.students)
+        learning_target = data.check_all(learning_target, cache.targets)
 
         st.header('Meetings')
         home.meeting_summary('meetings')
