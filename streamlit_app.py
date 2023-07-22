@@ -206,8 +206,7 @@ class data():
 # In[7] Global Filters to Call Back:
 def meeting_filters(inline=True):
 
-    cache =
-    {
+    cache = {
     'students' : pd.DataFrame(data.getTab('contacts'))[4],
     'student_ids' : [10000, 10001, 10002],
     'targets' : ["L.1", "L.2"],
