@@ -257,19 +257,20 @@ class home():
 
 
     def meeting_summary(meeting_table):
-        stream = pd.DataFrame(data.getTab('meetings'))
-        stream.columns = [
-            'PartitionKey',
-            'RowKey',
-            'Timestamp',
-            'Date',
-            'Student ID',
-            'Learning Target',
-            'Course Offering',
-            'Result',
-            'Notes',
-            'RefHash'
-        ]
+        stream = pd.DataFrame(data.getTab(meeting_table))
+        if len(stream)!=0:
+            stream.columns = [
+                'PartitionKey',
+                'RowKey',
+                'Timestamp',
+                'Date',
+                'Student ID',
+                'Learning Target',
+                'Course Offering',
+                'Result',
+                'Notes',
+                'RefHash'
+            ]
         #student_fields = ['Date', 'Learning Target', 'Result'] #for future auth portal
         instructor_fields = ['Course Offering', 'Date', 'Learning Target', 'Result', 'Notes']
         st.dataframe(stream[instructor_fields])
