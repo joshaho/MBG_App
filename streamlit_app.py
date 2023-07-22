@@ -171,7 +171,8 @@ class data():
     #Command to insert new data into existing table on Azure Table Storage
     def setTable(tablename,table, partition, row_index=0):  
         for row_number in range(len(table)):  
-            uid = int(datetime.datetime.today().timestamp()) #row_number+1
+            #uid = int(datetime.datetime.today().timestamp()) #row_number+1
+            uid = int(datetime.datetime.now().strftime('%Y%m%d%H%M%S%f'))
             task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(uid)}  
             print(task)
             for column in table.columns:
