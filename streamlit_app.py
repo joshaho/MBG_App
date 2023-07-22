@@ -181,7 +181,7 @@ class data():
 
     #Retrieve existing table from Azure Table Storage client
     def getTab(tableName):  
-        tasks = data.table_service.query_entities(tableName)  
+        tasks = table_service.query_entities(tableName)  
         tab=[]  
         newrow=[]  
         for row in tasks:  
