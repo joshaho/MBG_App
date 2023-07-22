@@ -294,7 +294,7 @@ class setup():
             timestamp_int = int(datetime.datetime.now().strftime('%Y%m%d%H%M%S%f'))
             course_table = "course"
             course_offering_table = "courseoffering"
-            student_table = "students"
+            student_table = "contacts"
 
             canvas_data = pd.read_csv(canvas_file)
             offering = re.findall("20[0-9]{2}[a-zA-Z]{2}", canvas_file.name)[0]
@@ -311,16 +311,16 @@ class setup():
                     })
             student_write_table = pd.DataFrame(
                 {"student_id": canvas_data['Student ID'].values,
-                "name": canvas_data['Student name'].values
+                "student_name": canvas_data['Student name'].values
                     }).iloc[0:1]
-            student_write_table['join year'] = year
+            student_write_table['join_year'] = year
             st.dataframe(student_write_table)
             if st.button("Submit"):
                 data.setTable(course_table, course_write_table, offering_id, timestamp_int)
                 st.write('Done Course Table')
                 data.setTable(course_offering_table, course_offering_write_table, offering_id, timestamp_int)
                 st.write('Done Course Offering')
-                data.setTable(student_table, course_offering_write_table, offering_id, timestamp_int) #setTable(tablename,table, partition, row_index=0)
+                data.setTable(student_table, student_write_table, offering_id, timestamp_int) #setTable(tablename,table, partition, row_index=0)
 
                 st.write('Done Student Table')
                 st.write("Saved!")
