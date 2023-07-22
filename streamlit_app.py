@@ -203,28 +203,29 @@ class data():
         else:
             return option
 
-
-def cache():
-    students = pd.DataFrame(data.getTab('contacts'))[4]
-    student_ids =[10000, 10001, 10002]
-    targets = ["L.1", "L.2"]
-    course_offering = ["MAT230-F2022-01"]
-
 # In[7] Global Filters to Call Back:
 def meeting_filters(inline=True):
+
+    cache =
+    {
+    'students' : pd.DataFrame(data.getTab('contacts'))[4],
+    'student_ids' : [10000, 10001, 10002],
+    'targets' : ["L.1", "L.2"],
+    'course_offering' : ["MAT230-F2022-01"]
+    }
 
     
 
     if inline==True:
-        course_offering = st.selectbox("Course Offering", cache.course_offering)
+        course_offering = st.selectbox("Course Offering", cache['course_offering'])
         date = st.date_input("Meeting Date")
-        student = st.selectbox("Student Name", cache.students)
-        learning_target = st.selectbox("Learning Target", cache.targets)
+        student = st.selectbox("Student Name", cache['students'])
+        learning_target = st.selectbox("Learning Target", cache['targets'])
     else:
-        course_offering = st.sidebar.selectbox("Course Offering", data.add_all(cache.course_offering))
+        course_offering = st.sidebar.selectbox("Course Offering", data.add_all(cache['course_offering']))
         date = st.sidebar.date_input("Meeting Date")
-        student = st.sidebar.selectbox("Student Name", data.add_all(cache.students))
-        learning_target = st.sidebar.selectbox("Learning Target", data.add_all(cache.targets))
+        student = st.sidebar.selectbox("Student Name", data.add_all(cache['students']))
+        learning_target = st.sidebar.selectbox("Learning Target", data.add_all(cache['targets']))
     return course_offering, date, student, learning_target
 
 # In[6] Meeting Logger App:
