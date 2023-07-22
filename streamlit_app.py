@@ -295,9 +295,9 @@ class home():
         cache = call_cache()
 
         course_offering, date, student, learning_target = meeting_filters(False)
-        course_offering = data.check_all(course_offering, cache.course_offering)
-        student = data.check_all(student, cache.students)
-        learning_target = data.check_all(learning_target, cache.targets)
+        course_offering = data.check_all(course_offering, cache['course_offering'])
+        student = data.check_all(student, cache['students'])
+        learning_target = data.check_all(learning_target, cache['targets'])
 
         st.header('Meetings')
         home.meeting_summary('meetings')
