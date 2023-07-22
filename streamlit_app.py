@@ -206,9 +206,9 @@ class data():
 def call_cache():
     cache = {
     'students' : pd.DataFrame(data.getTab('contacts'))[4],
-    'student_ids' : [10000, 10001, 10002],
+    'student_ids' : pd.DataFrame(data.getTab('contacts'))[3],
     'targets' : ["L.1", "L.2"],
-    'course_offering' : ["MAT230-F2022-01"]
+    'course_offering' : pd.DataFrame(data.getTab('courseoffering'))[3]
     }
     return cache
 
