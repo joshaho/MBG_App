@@ -175,8 +175,7 @@ class data():
             uid = int(datetime.datetime.now().strftime('%Y%m%d%H%M%S%f'))
             task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(uid)}  
             for column in table.columns:
-                task[column] = json_serial(table.iloc[[row_number]][column].values[0])
-            st.write(task)    
+                task[column] = json_serial(table.iloc[[row_number]][column].values[0]) 
             data.table_service.insert_entity(tablename, task)  
         return True 
 
