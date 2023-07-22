@@ -275,7 +275,10 @@ class home():
             st.write('table not found.')
         #student_fields = ['Date', 'Learning Target', 'Result'] #for future auth portal
         instructor_fields = ['Course Offering', 'Date', 'Learning Target', 'Result', 'Notes']
-        st.dataframe(stream[instructor_fields])
+        try:
+            st.dataframe(stream[instructor_fields])
+        except KeyError:
+            st.write('waiting for first record')
         return
 
     def __init__(self):
