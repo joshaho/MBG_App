@@ -173,7 +173,6 @@ class data():
         for row_number in range(len(table)):  
             uid = int(datetime.datetime.today().timestamp())
             task = {'PartitionKey': "P"+str(partition), 'RowKey':  "R"+str(uid)}  
-            print(task)
             for column in table.columns:
                 task[column] = json_serial(table.iloc[[row_number]][column].values[0])
         data.table_service.insert_entity(tablename, task)  
@@ -320,7 +319,9 @@ class setup():
                 st.write('Done Course Table')
                 data.setTable(course_offering_table, course_offering_write_table, offering_id, timestamp_int)
                 st.write('Done Course Offering')
-                data.setTable(student_table, student_write_table, offering_id, timestamp_int) #setTable(tablename,table, partition, row_index=0)
+                for ind, row in student_write_table.iterrows():
+                    data.setTable(student_table, row, offering_id, timestamp_int) #setTable(tablename,table, partition, row_index=0)
+                
                 st.write('Done Student Table')
                 st.write("Saved!")
                 
