@@ -258,7 +258,7 @@ class home():
 
     def meeting_summary(meeting_table):
         stream = pd.DataFrame(data.getTab(meeting_table))
-        if len(stream)!=0:
+        try:
             stream.columns = [
                 'PartitionKey',
                 'RowKey',
@@ -271,6 +271,8 @@ class home():
                 'Notes',
                 'RefHash'
             ]
+        except ValueError:
+            st.write('table not found.')
         #student_fields = ['Date', 'Learning Target', 'Result'] #for future auth portal
         instructor_fields = ['Course Offering', 'Date', 'Learning Target', 'Result', 'Notes']
         st.dataframe(stream[instructor_fields])
